@@ -23,12 +23,6 @@ const StorageCtrl = function(){
         clearInvoice: function(){
             localStorage.removeItem('invoice');
         },
-
-        // // To load the invoice
-        //     let invoice = localStorage.getItem('invoice');
-        //     if(!invoice) return null;
-        //     return JSON.parse(invoice);
-
     }
 }();
 
@@ -148,15 +142,13 @@ const UICtrl = function(){
 
             let items = [];
 
-            document.querySelectorAll(UISelectors.itemRows).forEach(row => {
+            document.querySelectorAll('#saved-items .item-row').forEach(row => {
 
-                const name = row.querySelector('.item-name').value;
-                const qty = parseFloat(row.querySelector('.qty').value) || 0;
-                const price = parseFloat(row.querySelector('.price').value) || 0;
+                const name = row.querySelector('.item-name-text')?.textContent || "";
+                const qty = parseFloat(row.querySelector('.qty')?.value) || 0;
+                const price = parseFloat(row.querySelector('.price')?.value) || 0;
 
-                if (name !== "") {
-                    items.push({ name, qty, price });
-                }
+                items.push({ name, qty, price });
             });
 
             return items;
@@ -176,15 +168,22 @@ const UICtrl = function(){
             `${currency}${totals.total.toFixed(2)}`;
         },
 
-        calculateRowTotals: function() {
+        calculateRowTotals: function () {
 
-            document.querySelectorAll(UISelectors.itemRows).forEach(row => {
-                const qty = parseFloat(row.querySelector('.qty').value) || 0;
-                const price = parseFloat(row.querySelector('.price').value) || 0;
+            document.querySelectorAll('#saved-items .item-row').forEach(row => {
+
+                const qtyEl = row.querySelector('.qty');
+                const priceEl = row.querySelector('.price');
+                const totalEl = row.querySelector('.row-total');
+
+                const qty = parseFloat(qtyEl?.value) || 0;
+                const price = parseFloat(priceEl?.value) || 0;
 
                 const total = qty * price;
 
-                row.querySelector('.total').value = total.toFixed(2);
+                if (totalEl) {
+                    totalEl.textContent = total.toFixed(2);
+                }
             });
         },
 
@@ -276,11 +275,15 @@ const App = (function (ItemCtrl, UICtrl, StorageCtrl) {
         document.querySelector('#downloadInvoice')
         .addEventListener('click', downloadInvoice);
 
-        // STEP 4: DELETE ITEM EVENT DELEGATION
-        document.querySelector('.itemlist').addEventListener('click', deleteItem);
+        document.querySelector('#saved-items').addEventListener('click', deleteItem);
 
-        document.querySelectorAll('.qty, .price').forEach(input => {
-            input.addEventListener('input', liveCalculation);
+        document.querySelector('#saved-items').addEventListener('input', function (e) {
+            if (
+                e.target.classList.contains('qty') ||
+                e.target.classList.contains('price')
+            ) {
+                liveCalculation();
+            }
         });
     };
 
@@ -298,98 +301,120 @@ const App = (function (ItemCtrl, UICtrl, StorageCtrl) {
         alert('Invoice Saved Successfully!');
     };
 
-const downloadInvoice = function () {
+    const downloadInvoice = function () {
 
-    const formData = UICtrl.getInputs();
-    const items = ItemCtrl.getItems();
-    const totals = ItemCtrl.calculateTotals();
+        const formData = UICtrl.getInputs();
+        const items = UICtrl.getItemInputs();
+        const totals = ItemCtrl.calculateTotals();
 
-    UICtrl.updatePreview(formData);
-    UICtrl.updateItemsPreview(items);
+        UICtrl.updatePreview(formData);
+        UICtrl.updateItemsPreview(items);
 
-    const currency = document.querySelector('#currency').value;
-    
-    document.querySelector('#previewSubtotal').textContent =
-    formatMoney(totals.subtotal, currency);
+        const currency = document.querySelector('#currency').value;
 
-    document.querySelector('#previewTax').textContent =
-    formatMoney(totals.tax, currency);
+        document.querySelector('#previewSubtotal').textContent =
+        formatMoney(totals.subtotal, currency);
 
-    document.querySelector('#previewGrandTotal').textContent =
-    formatMoney(totals.total, currency);
+        document.querySelector('#previewTax').textContent =
+        formatMoney(totals.tax, currency);
 
-    const invoice = document.querySelector('.invoice-preview');
+        document.querySelector('#previewGrandTotal').textContent =
+        formatMoney(totals.total, currency);
 
-    window.scrollTo(0, 0); // 🔥 IMPORTANT FIX
+        const invoice = document.querySelector('.invoice-preview');
 
-    const options = {
-        margin: 0.3,
-        filename: 'invoice.pdf',
-        image: { type: 'jpeg', quality: 1 },
+        window.scrollTo(0, 0); //
 
-        html2canvas: {
-            scale: 2,
-            useCORS: true,
-            scrollY: 0,
-            windowWidth: document.body.scrollWidth,
-            windowHeight: document.body.scrollHeight
-        },
+        const options = {
+            margin: 0.3,
+            filename: 'invoice.pdf',
+            image: { type: 'jpeg', quality: 1 },
 
-        jsPDF: {
-            unit: 'in',
-            format: 'a4',
-            orientation: 'portrait'
-        },
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                scrollY: 0,
+                windowWidth: document.body.scrollWidth,
+                windowHeight: document.body.scrollHeight
+            },
 
-        pagebreak: {
-            mode: ['avoid-all', 'css', 'legacy']
-        }
+            jsPDF: {
+                unit: 'in',
+                format: 'a4',
+                orientation: 'portrait'
+            },
+
+            pagebreak: {
+                mode: ['avoid-all', 'css', 'legacy']
+            }
+        };
+
+        html2pdf().set(options).from(invoice).save();
     };
-
-    html2pdf().set(options).from(invoice).save();
-};
 
     const addItem = function (e) {
         e.preventDefault();
 
-        const itemList = document.querySelector('.itemlist');
+        const savedContainer = document.querySelector('#saved-items');
+
+        const nameInput = document.querySelector('.item-name');
+        const qtyInput = document.querySelector('.qty');
+        const priceInput = document.querySelector('.price');
+
+        const name = nameInput.value;
+        const qty = parseFloat(qtyInput.value) || 0;
+        const price = parseFloat(priceInput.value) || 0;
+
+        if (name === "") return;
 
         const newRow = document.createElement('div');
         newRow.className = 'item-row';
 
         newRow.innerHTML = `
-            <span>*</span>
-            <input type="text" class="item-name" placeholder="Item">
-            <input type="number" class="qty">
-            <input type="number" class="price">
-            <input type="text" class="total" readonly>
+            <span>${savedContainer.children.length + 1}</span>
+            <span class="item-name-text">${name}</span>
+            <input class="qty" type="number" value="${qty}">
+            <input class="price" type="number" value="${price}">
+            <span class="row-total">${qty * price}</span>
             <button class="delete-item">X</button>
         `;
 
-        itemList.appendChild(newRow);
+        savedContainer.appendChild(newRow);
 
-        // 🔥 ADD THIS (sync preview)
-        UICtrl.updateItemsPreview(UICtrl.getItemInputs());
+        nameInput.value = "";
+        qtyInput.value = "";
+        priceInput.value = "";
+
+        liveCalculation();
     };
 
     const liveCalculation = function () {
 
-        const itemInputs = UICtrl.getItemInputs();
+    const items = [];
 
-        ItemCtrl.clearAll();
+    document.querySelectorAll('#saved-items .item-row').forEach(row => {
 
-        itemInputs.forEach(item => {
-            ItemCtrl.addItem(item.name, item.qty, item.price);
-        });
+        const name = row.querySelector('.item-name-text').textContent;
+        const qty = parseFloat(row.querySelector('.qty').value) || 0;
+        const price = parseFloat(row.querySelector('.price').value) || 0;
 
-        UICtrl.calculateRowTotals();
+        items.push({ name, qty, price });
+    });
 
-        const totals = ItemCtrl.calculateTotals();
-        UICtrl.updateTotals(totals);
+    // rebuild ItemCtrl ALWAYS
+    ItemCtrl.clearAll();
 
-        // 🔥 ADD THIS
-        UICtrl.updateItemsPreview(itemInputs);
-    };
+    items.forEach(item => {
+        ItemCtrl.addItem(item.name, item.qty, item.price);
+    });
+
+    // SINGLE SOURCE OF TRUTH
+    const totals = ItemCtrl.calculateTotals();
+
+    UICtrl.updateTotals(totals);
+    UICtrl.updateItemsPreview(items);
+    UICtrl.updatePreview(UICtrl.getInputs());
+};
 
     const deleteItem = function(e) {
 
@@ -412,7 +437,6 @@ const downloadInvoice = function () {
                 row.querySelector('span').textContent = index + 1;
             });
 
-            // 🔥 ADD THIS
             UICtrl.updateItemsPreview(itemInputs);
         }
     };

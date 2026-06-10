@@ -263,13 +263,13 @@ const App = (function (ItemCtrl, UICtrl, StorageCtrl) {
             const currency = this.value;
 
             document.querySelector('#previewSubtotal').textContent =
-                `${currency}${totals.subtotal.toFixed(2)}`;
+            currency + totals.subtotal.toFixed(2);
 
             document.querySelector('#previewTax').textContent =
-                `${currency}${totals.tax.toFixed(2)}`;
+            currency + totals.tax.toFixed(2);
 
             document.querySelector('#previewGrandTotal').textContent =
-                `${currency}${totals.total.toFixed(2)}`;
+            currency + totals.total.toFixed(2);
         });
 
         
@@ -307,6 +307,8 @@ const downloadInvoice = function () {
     UICtrl.updatePreview(formData);
     UICtrl.updateItemsPreview(items);
 
+    const currency = document.querySelector('#currency').value;
+    
     document.querySelector('#previewSubtotal').textContent =
     formatMoney(totals.subtotal, currency);
 
@@ -451,20 +453,3 @@ const downloadInvoice = function () {
 })(ItemCtrl, UICtrl, StorageCtrl);
 
 App.init();
-
-
-// Invoice Controller /////////////////////////////
-// addItem()
-// calculateTotals()
-// getInvoiceData()
-
-// UI controller /////////////////////////////
-// getSelectors()
-// updatePreview()
-// showTotals()
-
-// App controller ///////////////////////////////
-// loadEventListeners()
-// itemCalculation()
-// saveInvoice()
-// loadInvoice()

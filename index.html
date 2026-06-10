@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Receipt</title>
+
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="container001">
+        <div class="header-real">
+            <div class="header">
+                <div class="invoice-header">
+                    <p class="invoice fas fa-invoice"><span>KARA </span>INVOICE MAKER</p>
+                </div>
+                <div class="addinvoice-header">
+                    <p class="addinvoice fas fa-plus">New Invoice</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container002">
+            <div class="container003">
+                <div class="left-part">
+                    <div class="currency-section">
+                        <p>Currency</p>
+                        <select id="currency">
+                            <option value="$">USD ($)</option>
+                            <option value="₦">NGN (₦)</option>
+                            <option value="£">GBP (£)</option>
+                            <option value="€">EUR (€)</option>
+                        </select>
+                    </div>
+
+                    <div class="left-part-below-from">
+
+                        <div class="bill-from">
+                            <h3>Bill From</h3>
+
+                            <div class="bill-from-head">
+                                <div class="bill-form-h1">
+                                    <p>Business Name</p>
+                                    <input id="ClientsName" type="text" placeholder="Creative Studio">
+                                </div>
+                                <div class="bill-form-h2">
+                                    <p>Email</p>
+                                    <input id="clientsEmail" type="email" placeholder="adeyerialameen27@gmail.com">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clients-address">
+                            <div class="clients-address-address">
+                                <p>Address</p>
+                                <input type="text" placeholder="7, Amoke Shoderu Close, Haruna Busstop, Ikorodu, Lagos State">
+                            </div>
+                            <div class="clients-address-phone">
+                                <p>Phone</p>
+                                <input id="clientsPhone" type="tel" placeholder="+234 9013090421">
+                            </div>
+                        </div>
+
+                        <div class="receiver-details">
+                            <div class="receiver-name">
+
+                                <p>Client Name</p>
+                                <input id="receiverName" type="text" placeholder="Adeyeri">
+                            </div>
+                            <div class="receiver-email">
+                                <p>Email</p>
+                                <input id="receiverEmail" type="email" placeholder="alameenadeyeri@gmail.com">
+                            </div>
+                        </div>
+
+                        <div class="receivers-address">
+                            <p>Address</p>
+                            <input id="receiverAddress" type="text" placeholder="Put the receivers address">
+                        </div>
+
+                        <div class="invoice-details">
+
+                            <div>
+                                <p>Invoice Number</p>
+                                <input id="InvoiceNumber" type="text" placeholder="INV-1001">
+                            </div>
+
+                            <div>
+                                <p>Issue Date</p>
+                                <input id="IssueDate" type="date">
+                            </div>
+
+                            <div>
+                                <p>Due Date</p>
+                                <input id="DueDate" type="date">
+                            </div>
+
+                        </div>
+
+                        <div class="items">
+                            <div class="item-heading">
+                                <p>Items</p>
+                            </div>
+                            <div class="itemlist">
+                                <div class="item-header">
+                                    <span>#</span>
+                                    <span>Item</span>
+                                    <span>Qty</span>
+                                    <span>Price</span>
+                                    <span>Total</span>
+                                    <span>Delete</span>
+                                </div>
+
+                                <div class="item-row">
+                                    <span>1</span>
+                                    <input type="text" class="item-name" placeholder="Solar">
+                                    <input type="number" class="qty">
+                                    <input type="number" class="price">
+                                    <input type="text" class="total" readonly>
+                                    <button class="delete-item">X</button>
+                                </div>
+                                <!-- <div class="item-row">
+                                    <span>2</span>
+                                    <input type="text" class="item-name" placeholder="Phone">
+                                    <input type="number" class="qty">
+                                    <input type="number" class="price">
+                                    <input type="text" class="total" readonly>
+                                 </div>
+                                <div class="item-row">
+                                    <span>3</span>
+                                    <input type="text" class="item-name" placeholder="Laptop">
+                                    <input type="number" class="qty">
+                                    <input type="number" class="price">
+                                    <input type="text" class="total" readonly>
+                                    </div> -->
+
+                                <div class="add-item">
+                                    <button id="add-item">
+                                    <i class="fas fa-plus"></i>
+                                    Add Item 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="summary">
+                            <h3>summary</h3>
+                            <div class="summary-row total-row">
+                                <span>Subtotal</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+                            <div class="summary-row total-row">
+                                <span>Tax (10%)</span>
+                                <span id="tax">$0.00</span>
+                            </div>
+                            <div class="summary-row total-row">
+                                <span>Discount</span>
+                                <span id="discount">$0.00</span>
+                            </div>
+                            <div class="summary-row total-row1">
+                                <span>Total</span>
+                                <span id="grand-total">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                                <button id="saveInvoice">
+                                    <i class="fas fa-save"></i>
+                                    Save Invoice
+                                </button>
+
+                                <button id="downloadInvoice">
+                                    <i class="fas fa-download"></i>
+                                    Download Invoice
+                                </button>
+                            </div>
+                    </div>
+                </div>
+            </div>  
+            
+
+            <!-- /////////// Right Part ////////////////// -->
+            <div class="container004">
+                <div class="right-part">
+                    <div class="invoice-preview">
+
+                        <!-- Top Section -->
+                        <div class="preview-header">
+
+                            <div class="company-info">
+                                <div class="logo-box">
+                                    <i class="fas fa-file-invoice"></i>
+                                    <h2 id="previewBusinessName">KARA</h2>
+                                </div>
+
+                                <div>
+                                    <p id="logo-box-word">We make it happen</p>
+                                </div>
+                            </div>
+
+                            <div class="invoice-title">
+                                <h1>INVOICE</h1>
+
+                                <div class="invoice-number-box">
+                                    # <span id="previewInvoiceNumber">INV-1001</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Dates -->
+
+                        <div class="invoice-dates">
+
+                            <p>
+                                <strong>Issue Date:</strong>
+                                <span id="previewIssueDate">07/06/2026</span>
+                            </p>
+
+                            <p>
+                                <strong>Due Date:</strong>
+                                <span id="previewDueDate">07/06/2026</span>
+                            </p>
+
+                        </div>
+
+                        <!-- Billing Section -->
+
+                        <div class="billing-section">
+
+                            <div class="bill-box">
+                                <h4>Bill From</h4>
+
+                                <p id="previewCompany">
+                                    KARA
+                                </p>
+
+                                <p id="previewBusinessAddress">
+                                    7, Balogun Street, Anifowoshe Ikeja, Lagos
+                                </p>
+
+                                <p id="previewBusinessEmail">
+                                    info@email.com
+                                </p>
+
+                                <p id="previewBusinessPhone">
+                                    +234 000000000
+                                </p>
+                            </div>
+
+                            <div class="bill-box">
+                                <h4>Bill To</h4>
+
+                                <p id="previewClientName">
+                                    John Doe
+                                </p>
+
+                                <p id="previewClientAddress">
+                                    Client Address
+                                </p>
+
+                                <p id="previewClientEmail">
+                                    client@email.com
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- Items Table -->
+
+                        <div class="invoice-items">
+
+                            <div class="table-header">
+                                <span>#</span>
+                                <span>Item</span>
+                                <span>Qty</span>
+                                <span>Price</span>
+                                <span>Total</span>
+                            </div>
+
+                            <div id="preview-items">
+
+                                <!-- <div class="table-row">
+                                    <span>1</span>
+                                    <span>Web Design</span>
+                                    <span>1</span>
+                                    <span>$500</span>
+                                    <span>$500</span>
+                                </div> -->
+
+                            </div>
+
+                        </div>
+
+                        <!-- Totals -->
+
+                        <div class="invoice-summary">
+
+                            <div class="sum-row">
+                                <span>Subtotal</span>
+                                <span id="previewSubtotal">$0.00</span>
+                            </div>
+
+                            <div class="sum-row">
+                                <span>Tax</span>
+                                <span id="previewTax">$0.00</span>
+                            </div>
+
+                            <div class="sum-row">
+                                <span>Discount</span>
+                                <span id="previewDiscount">$0.00</span>
+                            </div>
+
+                            <div class="sum-row grand-total">
+                                <span>Total</span>
+                                <span id="previewGrandTotal">$0.00</span>
+                            </div>
+
+                        </div>
+
+                        <!-- Footer -->
+
+                        <div class="payment-info">
+
+                            <h4>Payment Information</h4>
+
+                            <p> <span>Bank Name: </span>Access Bank</p>
+                            <p><span>Account Name:</span>KARA ONLINE STORE</p>
+                            <p><span>Account Number:</span>1234567890</p>
+
+                            <br>
+
+                            <p>Thank you for your patronage!</p>
+
+                            <div class="signature">
+                                Thank You!
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</body>
+</html>
+

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -54,7 +54,7 @@
                         <div class="clients-address">
                             <div class="clients-address-address">
                                 <p>Address</p>
-                                <input type="text" placeholder="7, Amoke Shoderu Close, Haruna Busstop, Ikorodu, Lagos State">
+                                <input id="clientAddress" type="text" placeholder="7, Amoke Shoderu Close, Haruna Busstop, Ikorodu, Lagos State">
                             </div>
                             <div class="clients-address-phone">
                                 <p>Phone</p>
@@ -118,7 +118,7 @@
                                     <input type="number" class="qty">
                                     <input type="number" class="price">
                                     <input type="text" class="total" readonly>
-                                    <button class="delete-item">X</button>
+                                    <!-- <button id="delete-item" class="delete-item">X</button> -->
                                 </div>
                                 <!-- STACKED ITEMS GO HERE -->
                                 <div id="saved-items"></div>
@@ -191,7 +191,7 @@
                                 <h1>INVOICE</h1>
 
                                 <div class="invoice-number-box">
-                                    # <span id="previewInvoiceNumber">INV-1001</span>
+                                     <span id="previewInvoiceNumber">INV-1001</span>
                                 </div>
                             </div>
 
@@ -334,7 +334,8 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <!-- <script src="app.js"></script> -->
+    <script src="app01.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>

@@ -114,7 +114,7 @@ body{
 /* for two sided elements */
 .bill-form-h1 input,
 .bill-form-h2 input,
-.receiever-name input,
+.receiver-name input,
 .receiver-email input,
 .invoice-details input{
     width: 100%;
@@ -179,9 +179,18 @@ body{
     gap:10px;
     align-items:center;
 }
-/* .item-row .qty{
-    width: 20px;
-} */
+.delete-item{
+    width: 60px;
+    height: 25px;
+    color: red;
+    font-size: 20px;
+}
+.delete-item:hover{
+    color: black;
+}
+.item-row button:hover{
+    background:red;
+}
 .item-header{
     background:black;
     color:white;
@@ -192,12 +201,10 @@ body{
     gap:10px;
     align-items:center;
 }
-
 .item-row{
     padding:15px;
     border-bottom:1px solid #ddd;
 }
-
 .item-row input{
     width:100%;
     height:40px;
@@ -220,6 +227,10 @@ body{
     border-radius:6px;
     cursor:pointer;
     margin: 40px 0 10px 0;
+}
+#add-item:hover{
+    color: var(--font-color2);
+    background: black;
 }
 .summary{
     margin-top:25px;
@@ -256,7 +267,6 @@ body{
 }
 .total-row1{
     background: var(--font-color2);
-
 }
 #saveInvoice{
     color: black;
@@ -269,6 +279,10 @@ body{
     cursor:pointer;
     margin: 40px 0 10px 0;
 }
+#saveInvoice:hover{
+    color: var(--font-color2);
+    background: black;
+}
 #downloadInvoice{
     color: black;
     background: var(--font-color2);
@@ -280,11 +294,13 @@ body{
     cursor:pointer;
     margin: 40px 0 10px 0;
 }
-
+#downloadInvoice:hover{
+    color: var(--font-color2);
+    background: black;
+}
 
 
 /* ///////// Right part ////////////// */
-
 .right-part{
     flex:1;
 }
@@ -310,15 +326,16 @@ body{
     font-size:30px;
 }
 .logo-box h2{
-    margin-left: 15px;
+    margin-left: 80px;
     color: red;
     font-weight: 700;
     font-size: clamp(24px, 4vw, 48px);
 }
 #logo-box-word{
-    margin-left: 100px;
+    margin-left: 85px;
     font-size: 15px;
     font-weight: 500;
+    margin-top: -20px;
 }
 .company-info h2{
     margin-bottom:5px;
@@ -332,6 +349,7 @@ body{
 }
 .invoice-number-box{
     background:#ffc107;
+    color: black;
     padding:12px 25px;
     border-radius:5px;
     font-weight:bold;
@@ -347,17 +365,21 @@ body{
 .billing-section{
     display:flex;
     justify-content:space-between;
-    gap:400px;
+    gap:200px;
     margin-bottom:40px;
 }
 .bill-box{
     flex:1;
+    /* margin-left: -100px; */
 }
 .bill-box h4{
     margin-bottom:15px;
 }
 .bill-box p{
     margin-bottom:8px;
+    width: 150px;
+    text-wrap: nowrap;
+    white-space: none;
 }
 .invoice-items{
     margin-top:30px;
@@ -396,7 +418,7 @@ body{
     margin-top:10px;
 }
 .payment-info{
-    margin-top:50px;
+    margin-top: 90px;
 }
 .payment-info h4{
     margin-bottom:15px;
